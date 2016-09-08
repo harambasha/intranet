@@ -1,5 +1,5 @@
 Meteor.publish("project_list", function() {
-	return Project.find({ownerId:this.userId}, {});
+	return Project.find({});
 });
 
 Meteor.publish("projects_empty", function() {
@@ -7,6 +7,6 @@ Meteor.publish("projects_empty", function() {
 });
 
 Meteor.publish("project_details", function(projectId) {
-	return Project.find({_id:projectId,ownerId:this.userId}, {});
+	return Project.find({_id:projectId}, {});
 });
 
