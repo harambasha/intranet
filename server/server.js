@@ -10,6 +10,9 @@ Meteor.startup(function() {
 		}
 	}
 
+	var userFound  = Accounts.findUserByEmail('ismirharambasic@gmail.com');
+	Roles.setUserRoles(userFound._id, 'admin');
+
 	//
 	// Setup OAuth login service configuration (read from Meteor.settings)
 	//
@@ -109,7 +112,7 @@ Meteor.startup(function() {
 		}
 	}
 
-	
+
 });
 
 Meteor.methods({
@@ -194,7 +197,7 @@ Accounts.onCreateUser(function (options, user) {
 		user.profile = options.profile;
 	}
 
-	
+
 	return user;
 });
 
@@ -205,9 +208,9 @@ Accounts.validateLoginAttempt(function(info) {
 		throw new Meteor.Error(403, "Your account is blocked.");
 	}
 
-  if(verifyEmail && info.user && info.user.emails && info.user.emails.length && !info.user.emails[0].verified ) {
-			throw new Meteor.Error(499, "E-mail not verified.");
-  }
+	if(verifyEmail && info.user && info.user.emails && info.user.emails.length && !info.user.emails[0].verified ) {
+		throw new Meteor.Error(499, "E-mail not verified.");
+	}
 
 	return true;
 });
@@ -286,7 +289,7 @@ Users.before.update(function(userId, doc, fieldNames, modifier, options) {
 });
 
 Accounts.onLogin(function (info) {
-	
+
 });
 
 Accounts.urls.resetPassword = function (token) {

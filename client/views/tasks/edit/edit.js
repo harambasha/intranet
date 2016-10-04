@@ -85,8 +85,6 @@ Template.TasksEditEditForm.events({
 
 			},
 			function(values) {
-				
-
 				Tasks.update({ _id: t.data.task_details._id }, { $set: values }, function(e) { if(e) errorAction(e); else submitAction(); });
 			}
 		);
@@ -95,9 +93,6 @@ Template.TasksEditEditForm.events({
 	},
 	"click #form-cancel-button": function(e, t) {
 		e.preventDefault();
-
-		
-
 		Router.go("tasks", {});
 	},
 	"click #form-close-button": function(e, t) {

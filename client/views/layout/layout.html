@@ -170,6 +170,7 @@
 				</span>
 			</a>
 		</li>
+        {{#if isInRole 'admin'}}
 		<li id="menu-item-simple" class="{{menuItemClass 'projects'}}">
 			<a href="{{pathFor 'projects'}}">
 				<span class="item-title">
@@ -177,6 +178,14 @@
 				</span>
 			</a>
 		</li>
+        <li id="menu-item-simple" class="{{menuItemClass 'admin'}}">
+            <a href="{{pathFor 'admin'}}">
+                <span class="item-title">
+                    All items
+                </span>
+            </a>
+        </li>
+            {{/if}}
 	</ul>
 </template>
 

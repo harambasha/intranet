@@ -26,16 +26,12 @@ Tasks.before.update(function(userId, doc, fieldNames, modifier, options) {
 	modifier.$set = modifier.$set || {};
 	modifier.$set.modifiedAt = new Date();
 	modifier.$set.modifiedBy = userId;
-
-	
 });
 
 Tasks.before.upsert(function(userId, selector, modifier, options) {
 	modifier.$set = modifier.$set || {};
 	modifier.$set.modifiedAt = new Date();
 	modifier.$set.modifiedBy = userId;
-
-	/*BEFORE_UPSERT_CODE*/
 });
 
 Tasks.before.remove(function(userId, doc) {

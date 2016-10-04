@@ -30,12 +30,22 @@ var privateRoutes = [
 	"logout"
 ];
 
+var adminRoutes = [
+	"admin",
+	"admin.insert",
+	"admin.details",
+	"admin.edit"
+];
+
 var freeRoutes = [
 	
 ];
 
 var roleMap = [
-	
+	{ route: "admin",         roles: ["admin"] },
+	{ route: "admin.insert",    roles: ["admin"] },
+	{ route: "admin.details",    roles: ["admin"] },
+	{ route: "admin.edit",    roles: ["admin"] }
 ];
 
 this.firstGrantedRoute = function(preferredRoute) {
@@ -181,7 +191,8 @@ Router.onBeforeAction(function() {
 
 Router.onBeforeAction(Router.ensureNotLogged, {only: publicRoutes});
 Router.onBeforeAction(Router.ensureLogged, {only: privateRoutes});
-Router.onBeforeAction(Router.ensureGranted, {only: freeRoutes}); // yes, route from free zone can be restricted to specific set of user roles
+Router.onBeforeAction(Router.ensureGranted, {only: freeRoutes});
+Router.onBeforeAction(Router.ensureGranted, {only: adminRoutes});
 
 Router.map(function () {
 	
@@ -203,4 +214,8 @@ Router.map(function () {
 	this.route("user_settings.profile", {path: "/user_settings/profile", controller: "UserSettingsProfileController"});
 	this.route("user_settings.change_pass", {path: "/user_settings/change_pass", controller: "UserSettingsChangePassController"});
 	this.route("logout", {path: "/logout", controller: "LogoutController"});
+	this.route("admin", {path: "/admin", controller: "TasksAdminController"});
+	this.route("admin.insert", {path: "/admin/insert", controller: "TasksAdminInsertController"});
+	this.route("admin.details", {path: "/admin/details/:taskId", controller: "TasksAdminDetailsController"});
+	this.route("admin.edit", {path: "/admin/edit/:taskId", controller: "TasksAdminEditController"});
 });

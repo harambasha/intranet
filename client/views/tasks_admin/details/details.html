@@ -1,0 +1,102 @@
+<template name="TasksAdminDetails">
+    <div class="page-container container">
+        <div class="row">
+            <div class="col-md-12" id="content">
+                <div class="row" id="title_row">
+                    <div class="col-md-12">
+                        <div id="page_menu" class="pull-right">
+                        </div>
+                    </div>
+                </div>
+                {{> TasksAdminDetailsDetailsForm}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12" id="menu">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12" id="subcontent">
+            </div>
+        </div>
+    </div>
+</template>
+
+<template name="TasksAdminDetailsDetailsForm">
+    <div id="tasks-details-details-form" class="">
+        <h2 id="component-title">
+            <a href="#" id="form-back-button" class="btn btn-default" title="back">
+				<span class="fa fa-chevron-left">
+				</span>
+            </a>
+            Task #{{task_details.taskNumber}}
+        </h2>
+        <form role="form" class="form-horizontal">
+            {{#if errorMessage}}
+                <div class="alert alert-warning">
+                    {{errorMessage}}
+                </div>
+            {{/if}}
+
+            {{#if infoMessage}}
+                <div class="alert alert-success">
+                    {{infoMessage}}
+                </div>
+            {{/if}}
+            <div class="form-group  field-task-number">
+                <label for="taskNumber" class="col-sm-3 control-label">
+                    Task number
+                </label>
+                <div class="input-div col-sm-9">
+                    <p class="form-control-static  control-field-task-number">
+                        {{task_details.taskNumber}}
+                    </p>
+                </div>
+            </div>
+            <div class="form-group  field-date">
+                <label for="date" class="col-sm-3 control-label">
+                    Task date
+                </label>
+                <div class="input-div col-sm-9">
+                    <p class="form-control-static  control-field-date">
+                        {{formatDate task_details.date 'MM-DD-YYYY'}}
+                    </p>
+                </div>
+            </div>
+            <div class="form-group  field-project-name">
+                <label for="project.name" class="col-sm-3 control-label">
+                    Project
+                </label>
+                <div class="input-div col-sm-9">
+                    <p class="form-control-static  control-field-project-name">
+                        {{task_details.project.name}}
+                    </p>
+                </div>
+            </div>
+            <div class="form-group  field-total-hours">
+                <label for="totalHours" class="col-sm-3 control-label">
+                    Total Hours
+                </label>
+                <div class="input-div col-sm-9">
+                    <p class="form-control-static  control-field-total-hours">
+                        {{task_details.totalHours}}
+                    </p>
+                </div>
+            </div>
+            <div class="form-group  field-description">
+                <label for="description" class="col-sm-3 control-label">
+                    Description
+                </label>
+                <div class="input-div col-sm-9">
+                    <p class="form-control-static  control-field-description">
+                        {{task_details.description}}
+                    </p>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="submit-div col-sm-9 col-sm-offset-3">
+                </div>
+            </div>
+        </form>
+    </div>
+</template>

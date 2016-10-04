@@ -1,0 +1,215 @@
+<template name="TasksAdmin">
+    <div class="page-container container" id="content">
+        <div class="row" id="title_row">
+            <div class="col-md-12">
+                <div id="page_menu" class="pull-right">
+                </div>
+            </div>
+        </div>
+        {{> TasksAdminView}}
+    </div>
+</template>
+
+<template name="TasksAdminView">
+    <div id="tasks-view" class="">
+        <h2 id="component-title">
+            All tasks
+        </h2>
+        <form id="dataview-controls" class="form-inline">
+
+            <div id="dataview-controls-search">
+                {{#if isNotEmpty}}
+                    <div id="dataview-controls-search-group" class="form-group">
+                        <label class="sr-only" for="search">
+                            Search
+                        </label>
+                        <input type="text" class="form-control" id="dataview-search-input" placeholder="Search"
+                               name="search" value="{{searchString}}" autofocus="autofocus">
+                        <button type="button" id="dataview-search-button" class="btn btn-primary">
+						<span class="fa fa-search">
+						</span>
+                        </button>
+                    </div>
+                {{/if}}
+            </div>
+            <div id="dataview-controls-export" class="form-group">
+                {{#if isNotEmpty}}
+                    {{#if isFound}}
+                        <div>
+                        </div>
+                    {{else}}
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default" id="dataview-export-default">
+                                Export
+                            </button>
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+						<span class="caret">
+						</span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li>
+                                    <a href="#" id="dataview-export-csv">
+                                        Export to CSV
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" id="dataview-export-tsv">
+                                        Export to TSV
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" id="dataview-export-json">
+                                        Export to JSON
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                    {{/if}}
+                {{/if}}
+                <form id="userSelect" class="form-group">
+                    <select class="form-control" name="userSelect" id="userSelect" style="margin-left: 2px">
+                        <option selected="selected" value="">All developers</option>
+                        {{#each option_list}}
+                            <option value="{{_id}}">{{profile.name}}</option>
+                        {{/each}}
+                    </select>
+                    {{name}}
+                </form>
+                <form id="projectSelect" class="form-group">
+                    <select class="form-control" name="projectSelect" id="projectSelect" style="margin-left: 2px">
+                        <option selected="selected" value="">All projects</option>
+                        {{#each project_list}}
+                            <option value="{{_id}}"> {{name}}</option>
+                        {{/each}}
+                    </select>
+                    {{name}}
+                </form>
+
+                <div class="form-group">
+                    <div class='col-md-5'>
+                        <div class="form-group">
+                            <div class='input-group date' id='startDatePicker'>
+                                <input type="text" name="date" value="" class="form-control " required="required"
+                                       data-type="date" data-format="MM/DD/YYYY"/>
+                                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='col-md-5'>
+                        <div class="form-group">
+                            <div class='input-group date' id='endDatePicker'>
+                                <input type="text" name="date" value="" class="form-control " required="required"
+                                       data-type="date" data-format="MM/DD/YYYY"/>
+                                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <script type="text/javascript">
+                    $(function () {
+                        $('#startDatePicker').datepicker();
+                        $('#endDatePicker').datepicker();
+                        $('#endDatePicker').datepicker({
+                            useCurrent: false //Important! See issue #1075
+                        });
+                        $("#startDatePicker").on("dp.change", function (e) {
+                            $('#endDatePicker').data("DatePicker").minDate(e.date);
+                        });
+                        $("#endDatePicker").on("dp.change", function (e) {
+                            $('#startDatePicker').data("DatePicker").maxDate(e.date);
+                        });
+                    });
+                </script>
+
+            </div>
+        </form>
+        {{#if isNotEmpty}}
+            {{#if isNotFound}}
+                <div class="alert alert-warning">
+                    "{{searchString}}" not found.
+                </div>
+            {{else}}
+                <div id="dataview-data">
+                    {{#if viewAsTable}} {{> TasksAdminViewTable}} {{/if}}
+                </div>
+            {{/if}}
+        {{else}}
+
+        {{/if}}
+    </div>
+</template>
+
+<template name="TasksAdminViewTable">
+    <table id="dataview-table" class="table table-striped table-hover">
+        <thead id="dataview-table-header">
+        <tr id="dataview-table-header-row">
+            <th class="th-sortable" data-sort="taskNumber">
+                Task number
+            </th>
+            <th class="th-sortable" data-sort="date">
+                Task date
+            </th>
+            <th class="th-sortable" data-sort="project.name">
+                Project
+            </th>
+            <th class="th-sortable" data-sort="totalHours">
+                Total Hours
+            </th>
+            <th class="th-sortable" data-sort="description">
+                Description
+            </th>
+            <th class="th-sortable" data-sort="user.profile.name">
+                Developer
+            </th>
+            <th>
+                &nbsp;
+            </th>
+            <th>
+                &nbsp;
+            </th>
+        </tr>
+        </thead>
+        <tbody id="dataview-table-items">
+        {{#each tableItems}} {{> TasksAdminViewTableItems}} {{/each}}
+        </tbody>
+    </table>
+</template>
+
+<template name="TasksAdminViewTableItems">
+
+    <tr id="dataview-table-items-row">
+        <td>
+            {{taskNumber}}
+        </td>
+        <td>
+            {{formatDate date 'MM-DD-YYYY'}}
+        </td>
+        <td>
+            {{project.name}}
+        </td>
+        <td>
+            {{totalHours}}
+        </td>
+        <td>
+            {{description}}
+        </td>
+        <td>
+            {{user.profile.name}}
+        </td>
+        <td class="td-icon">
+			<span id="edit-admin-button" class="fa fa-pencil {{editAdmButtonClass}}" title="Edit">
+			</span>
+        </td>
+        <td class="td-icon">
+			<span id="delete-admin-button" class="fa fa-trash-o {{deleteButtonClass}}" title="Delete">
+			</span>
+        </td>
+    </tr>
+
+</template>

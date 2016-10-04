@@ -45,7 +45,7 @@
 				</label>
 				<div class="input-div">
 					<div class="input-group date">
-						<input type="text" name="startDate" value="{{formatDate project_details.startDate ''}}" class="form-control " data-type="date">
+						<input type="text" name="startDate" value="{{formatDate project_details.startDate ''}}" class="form-control " data-type="date" required="required">
 						<span class="input-group-addon">
 							<i class="fa fa-calendar">
 							</i>
@@ -63,7 +63,7 @@
 				</label>
 				<div class="input-div">
 					<div class="input-group date">
-						<input type="text" name="endDate" value="{{formatDate project_details.endDate ''}}" class="form-control " data-type="date">
+						<input type="text" name="endDate" value="{{formatDate project_details.endDate ''}}" class="form-control " data-type="date" required="required">
 						<span class="input-group-addon">
 							<i class="fa fa-calendar">
 							</i>
@@ -80,7 +80,7 @@
 					Note
 				</label>
 				<div class="input-div">
-					<textarea class="form-control " name="note">{{project_details.note}}</textarea>
+					<textarea class="form-control " name="note" required="required">{{project_details.note}}</textarea>
 					<span id="help-text" class="help-block">
 					</span>
 					<span id="error-text" class="help-block">
