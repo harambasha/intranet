@@ -1,6 +1,6 @@
 this.HomePrivateController = RouteController.extend({
 	template: "HomePrivate",
-	
+
 
 	yieldTemplates: {
 		/*YIELD_TEMPLATES*/
@@ -16,9 +16,11 @@ this.HomePrivateController = RouteController.extend({
 	},
 
 	isReady: function() {
-		
+
 
 		var subs = [
+			Meteor.subscribe("project_list"),
+			Meteor.subscribe("task_list_fc")
 		];
 		var ready = true;
 		_.each(subs, function(sub) {
@@ -29,19 +31,14 @@ this.HomePrivateController = RouteController.extend({
 	},
 
 	data: function() {
-		
-
 		var data = {
-			params: this.params || {}
+			params: this.params || {},
+			task_list: Tasks.find({ "projectId": "QYSXcgoksaqhPdP6G" }, {sort:[["taskNumber","desc"]]})
 		};
-		
-
-		
-
 		return data;
 	},
 
 	onAfterAction: function() {
-		
+
 	}
 });

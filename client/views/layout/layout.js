@@ -1,6 +1,6 @@
 Template.layout.rendered = function() {
 	// scroll to anchor
-	$('body').on('click', 'a', function(e) { 
+	$('body').on('click', 'a', function(e) {
 		var href = $(this).attr("href");
 		if(!href) {
 			return;
@@ -21,11 +21,11 @@ Template.layout.rendered = function() {
 				$('html,body').scrollTop(0);
 			}
 		}
-	}); 
+	});
 	/*TEMPLATE_RENDERED_CODE*/
 };
 
-Template.layout.events({ 
+Template.layout.events({
     "click": function(event) { // Fix Bootstrap Dropdown Menu Collapse on click outside Menu
         var clickover = $(event.target).closest(".dropdown-toggle").length;
         var opened = $(".navbar-collapse").hasClass("in");
@@ -44,18 +44,18 @@ Template.layout.events({
     }
 });
 
-Template.layout.helpers({ 
+Template.layout.helpers({
 	"privateData": function() {
 		return {
 			params: this.params || {}
 		};
-		
+
 	},
 	"publicData": function() {
 		return {
 			params: this.params || {}
 		};
-		
+
 	}
 });
 
@@ -80,7 +80,7 @@ Template.PublicLayoutLeftMenu.rendered = function() {
 			}
 		});
 	});
-	
+
 };
 
 Template.PublicLayoutLeftMenu.events({
@@ -88,11 +88,11 @@ Template.PublicLayoutLeftMenu.events({
 		e.preventDefault();
 		$(e.target).closest("ul").toggleClass("menu-hide-text");
 	}
-	
+
 });
 
 Template.PublicLayoutLeftMenu.helpers({
-	
+
 });
 
 Template.PublicLayoutRightMenu.rendered = function() {
@@ -106,7 +106,7 @@ Template.PublicLayoutRightMenu.rendered = function() {
 			}
 		});
 	});
-	
+
 };
 
 Template.PublicLayoutRightMenu.events({
@@ -114,11 +114,11 @@ Template.PublicLayoutRightMenu.events({
 		e.preventDefault();
 		$(e.target).closest("ul").toggleClass("menu-hide-text");
 	}
-	
+
 });
 
 Template.PublicLayoutRightMenu.helpers({
-	
+
 });
 
 Template.PrivateLayout.onCreated(function() {
@@ -137,7 +137,7 @@ Template.PrivateLayoutLeftMenu.rendered = function() {
 			}
 		});
 	});
-	
+
 };
 
 Template.PrivateLayoutLeftMenu.events({
@@ -145,11 +145,17 @@ Template.PrivateLayoutLeftMenu.events({
 		e.preventDefault();
 		$(e.target).closest("ul").toggleClass("menu-hide-text");
 	}
-	
+
 });
 
 Template.PrivateLayoutLeftMenu.helpers({
-	
+	'userIsKemal': function () {
+		if (Meteor.user().profile.email === 'kemal@pajevic.dk') {
+			return true;
+		} else {
+			return false;
+		}
+	},
 });
 
 Template.PrivateLayoutRightMenu.rendered = function() {
@@ -163,7 +169,7 @@ Template.PrivateLayoutRightMenu.rendered = function() {
 			}
 		});
 	});
-	
+
 };
 
 Template.PrivateLayoutRightMenu.events({
@@ -171,9 +177,9 @@ Template.PrivateLayoutRightMenu.events({
 		e.preventDefault();
 		$(e.target).closest("ul").toggleClass("menu-hide-text");
 	}
-	
+
 });
 
 Template.PrivateLayoutRightMenu.helpers({
-	
+
 });

@@ -1,15 +1,17 @@
 var pageSession = new ReactiveDict();
 
 Template.Tasks.rendered = function() {
-	
+	if (Meteor.user().profile.email === 'kemal@pajevic.dk') {
+		Router.go('home_private');
+	}
 };
 
 Template.Tasks.events({
-	
+
 });
 
 Template.Tasks.helpers({
-	
+
 });
 
 var TasksViewItems = function(cursor) {
@@ -73,7 +75,7 @@ var TasksViewExport = function(cursor, fileType) {
 
 Template.TasksView.rendered = function() {
 	pageSession.set("TasksViewStyle", "table");
-	
+
 };
 
 Template.TasksView.events({
@@ -155,7 +157,7 @@ Template.TasksView.events({
 		TasksViewExport(this.task_list, "json");
 	}
 
-	
+
 });
 
 Template.TasksView.helpers({
@@ -186,12 +188,12 @@ Template.TasksView.helpers({
 		return pageSession.get("TasksViewStyle") == "gallery";
 	}
 
-	
+
 });
 
 
 Template.TasksViewTable.rendered = function() {
-	
+
 };
 
 Template.TasksViewTable.events({
@@ -218,13 +220,13 @@ Template.TasksViewTable.helpers({
 
 
 Template.TasksViewTableItems.rendered = function() {
-	
+
 };
 
 Template.TasksViewTableItems.events({
 	"click td": function(e, t) {
 		e.preventDefault();
-		
+
 		Router.go("tasks.details", {taskId: this._id});
 		return false;
 	},
@@ -276,7 +278,7 @@ Template.TasksViewTableItems.events({
 });
 
 Template.TasksViewTableItems.helpers({
-	"checked": function(value) { return value ? "checked" : "" }, 
+	"checked": function(value) { return value ? "checked" : "" },
 	"editButtonClass": function() {
 		return Tasks.userCanUpdate(Meteor.userId(), this) ? "" : "hidden";
 	},
